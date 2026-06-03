@@ -42,3 +42,17 @@ python3 -m http.server 4173
 ```text
 http://localhost:4173/
 ```
+
+## 公開網址
+
+目前已部署到 GitHub Pages：
+
+```text
+https://toto-168.github.io/self-order-menu/
+```
+
+GitHub repo：
+
+```text
+https://github.com/TOTO-168/self-order-menu
+```
