@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自助點餐機</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <img src="./assets/meal-bowl.svg" alt="" class="brand-image" />
+        <div>
+          <p class="eyebrow">GROUP ORDER</p>
+          <h1>自助點餐機</h1>
+        </div>
+      </div>
+      <div class="header-note" id="selectedRestaurantLabel"></div>
+    </header>
+
+    <main class="app-layout">
+      <section class="tool-panel restaurant-panel" aria-labelledby="restaurantTitle">
+        <div class="section-heading">
+          <h2 id="restaurantTitle">餐廳</h2>
+          <span id="restaurantCount"></span>
+        </div>
+        <div class="restaurant-list" id="restaurantList" role="tablist" aria-label="餐廳選單"></div>
+      </section>
+
+      <section class="tool-panel menu-panel" aria-labelledby="menuTitle">
+        <div class="order-fields">
+          <label class="field">
+            <span>訂餐人</span>
+            <input id="customerName" type="text" autocomplete="name" placeholder="例如：小明" />
+          </label>
+          <label class="field">
+            <span>備註</span>
+            <input id="orderNote" type="text" placeholder="例如：不要洋蔥、飯少" />
+          </label>
+        </div>
+
+        <div class="section-heading menu-heading">
+          <div>
+            <h2 id="menuTitle">餐點</h2>
+            <p id="restaurantMeta"></p>
+          </div>
+          <button class="ghost-button" id="clearButton" type="button" aria-label="清除本次選擇">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18M8 6V4h8v2m-9 4 1 10m4-10v10m4-10-1 10M6 6l1 16h10l1-16" />
+            </svg>
+            清除
+          </button>
+        </div>
+
+        <form id="menuForm" class="menu-form"></form>
+      </section>
+
+      <aside class="summary-column">
+        <section class="tool-panel summary-panel" aria-labelledby="summaryTitle">
+          <div class="section-heading">
+            <div>
+              <h2 id="summaryTitle">點餐內容</h2>
+              <p id="summaryStatus"></p>
+            </div>
+            <strong class="total" id="orderTotal">$0</strong>
+          </div>
+
+          <pre id="summaryText" class="summary-text" aria-live="polite"></pre>
+
+          <div class="action-row">
+            <button class="primary-button" id="copyButton" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 8h11v13H8z" />
+                <path d="M5 16H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1" />
+              </svg>
+              複製文字
+            </button>
+            <button class="secondary-button" id="jpgButton" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v12" />
+                <path d="m7 10 5 5 5-5" />
+                <path d="M5 21h14" />
+              </svg>
+              下載 JPG
+            </button>
+          </div>
+        </section>
+
+        <section class="preview-panel" id="previewPanel" hidden>
+          <div class="section-heading">
+            <h2>JPG 預覽</h2>
+          </div>
+          <img id="jpgPreview" alt="點餐 JPG 預覽" />
+        </section>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
