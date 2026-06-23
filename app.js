@@ -1,86 +1,105 @@
-const customPokeNames = ["素食波奇", "小波奇", "大波奇", "豪華波奇"];
-const proteinPokeNames = ["小波奇", "大波奇", "豪華波奇"];
-const freeBaseOptions = [
-  "胚芽紫米",
-  "生菜",
-  "筆尖麵",
-  "胚芽紫米+生菜",
-  "胚芽紫米+筆尖麵",
-  "生菜+筆尖麵",
-].map((name) => ({ name, price: 0 }));
-const freeSideNames = [
-  "紫洋蔥",
-  "海藻沙拉",
-  "海帶芽",
-  "毛豆",
-  "番茄",
-  "鳳梨",
-  "小黃瓜",
-  "苜蓿芽",
-  "綠花椰",
-  "紅蘿蔔",
-  "玉米",
-  "豆腐",
-  "牛蒡絲",
-  "馬鈴薯",
-  "黃金泡菜",
-  "雲耳",
-  "紅地瓜泥",
+const APP_VERSION = "v2026.06.23.1";
+const QUICKCLICK_STATUS_PATH = "./quickclick-status.json";
+const QUICKCLICK_SYNC_INTERVAL_MS = 60 * 60 * 1000;
+
+function quickProduct(id) {
+  return { type: "product", id: String(id) };
+}
+
+function quickAddon(id) {
+  return { type: "addon", id: String(id) };
+}
+
+const takeAPokeCustomNames = ["自選 Poke Bowl"];
+const takeAPokeBaseOptions = [
+  { name: "藜麥飯", price: 0, quickClick: quickAddon(47622466) },
+  { name: "新鮮生菜", price: 0, quickClick: quickAddon(47622465) },
+  { name: "飯菜各半", price: 0, quickClick: quickAddon(47622467) },
+  { name: "藜麥飯1/2(無生菜)", price: 0, quickClick: quickAddon(47622523) },
 ];
-const freeSideOptions = [
-  ...freeSideNames.map((name) => ({ name, price: 0 })),
-  { name: "紫地瓜泥", price: 0, soldOut: true },
+const takeAPokeSideOptions = [
+  { name: "牛番茄", price: 0, quickClick: quickAddon(47622469) },
+  { name: "小黃瓜", price: 0, quickClick: quickAddon(47622468) },
+  { name: "水煮蛋半顆", price: 0, quickClick: quickAddon(47622470) },
+  { name: "毛豆", price: 0, quickClick: quickAddon(47622472) },
+  { name: "花椰菜", price: 0, quickClick: quickAddon(47622471) },
+  { name: "豆腐", price: 0, quickClick: quickAddon(47622473) },
+  { name: "海帶芽", price: 0, quickClick: quickAddon(47622474) },
+  { name: "蘋果丁", price: 0, quickClick: quickAddon(47622460) },
+  { name: "玉米筍", price: 0, quickClick: quickAddon(47622461) },
+  { name: "菠菜", price: 0, quickClick: quickAddon(47622462) },
+  { name: "泡菜", price: 0, quickClick: quickAddon(47622463) },
+  { name: "和風裙帶絲", price: 0, quickClick: quickAddon(47622464) },
+  { name: "墨西哥玉米粒(含紫洋蔥)", price: 0, quickClick: quickAddon(47622500) },
 ];
-const sauceOptions = [
-  "主廚經典醬",
-  "美式辣美乃滋",
-  "哇沙米 (素)",
-  "川味麻辣",
-  "和風油醋 (素)",
-  "焙煎胡麻",
-  "蜂蜜芥末",
-  "百香優格",
-  "不加醬",
-].map((name) => ({ name, price: 0 }));
-const toppingOptions = [
-  "香菜",
-  "青蔥",
-  "玉米脆片",
-  "香鬆",
-  "堅果",
-  "芝麻",
-  "七味粉",
-  "起司粉",
-  "海苔",
-  "麵包丁",
-].map((name) => ({ name, price: 0 }));
-const addOnBaseOptions = freeBaseOptions.map((option) => ({ ...option, price: 20 }));
-const addOnSideOptions = [
-  ...freeSideNames.map((name) => ({ name, price: 12 })),
-  { name: "紫地瓜泥", price: 12, soldOut: true },
+const takeAPokeProteinOptions = [
+  { name: "生鮭魚50g", price: 80, quickClick: quickAddon(47622475) },
+  { name: "生醃漬鮪魚50g", price: 75, quickClick: quickAddon(47622476) },
+  { name: "生甜蝦10隻", price: 70, quickClick: quickAddon(47622477) },
+  { name: "鮮蝦5隻", price: 70, quickClick: quickAddon(47622478) },
+  { name: "山葵章魚50g", price: 50, quickClick: quickAddon(47622479) },
+  { name: "雞胸肉50g", price: 30, quickClick: quickAddon(47622480) },
+  { name: "雞胸肉100g", price: 55, quickClick: quickAddon(47622482) },
+  { name: "骰子牛50g", price: 40, quickClick: quickAddon(47622481) },
+  { name: "骰子牛100g", price: 80, quickClick: quickAddon(47622483) },
 ];
-const addOnProteinOptions = [
-  { name: "舒肥雞胸", price: 40 },
-  { name: "豬肉", price: 40 },
-  { name: "起司乳酪", price: 40 },
-  { name: "蝦仁", price: 40 },
-  { name: "珍珠魚卵", price: 40 },
-  { name: "水煮蛋", price: 20 },
-  { name: "魷魚圈", price: 40 },
-  { name: "牛肉", price: 45 },
-  { name: "挪威生鮭魚", price: 60 },
+const takeAPokeSauceOptions = [
+  { name: "醬油哇沙米", price: 0, quickClick: quickAddon(47622484) },
+  { name: "柚子胡椒", price: 0, quickClick: quickAddon(47622485) },
+  { name: "胡麻醬", price: 0, quickClick: quickAddon(47622486) },
+  { name: "辣味美乃滋", price: 0, quickClick: quickAddon(47622487) },
+  { name: "無須加醬", price: 0, quickClick: quickAddon(47622518) },
 ];
-const addOnSauceOptions = sauceOptions
-  .filter((option) => option.name !== "不加醬")
-  .map((option) => ({ ...option, price: 15 }));
-const addOnToppingOptions = toppingOptions.map((option) => ({ ...option, price: 5 }));
+const takeAPokeToppingOptions = [
+  { name: "紫洋蔥", price: 0, quickClick: quickAddon(47622511) },
+  { name: "蔥花", price: 0, quickClick: quickAddon(47622506) },
+  { name: "黑芝麻", price: 0, quickClick: quickAddon(47622507) },
+  { name: "七味粉", price: 0, quickClick: quickAddon(47622508) },
+  { name: "咔辣姆久", price: 0, quickClick: quickAddon(47622509) },
+  { name: "鰹魚香鬆", price: 0, quickClick: quickAddon(47622510) },
+  { name: "無須撒料", price: 0, quickClick: quickAddon(47622521) },
+];
+const takeAPokeExtraBaseOptions = [
+  { name: "加飯", price: 15, quickClick: quickAddon(47622488) },
+  { name: "加生菜", price: 20, quickClick: quickAddon(47622490) },
+];
+const takeAPokeExtraSideOptions = [
+  { name: "牛番茄", price: 10, quickClick: quickAddon(47622491) },
+  { name: "小黃瓜", price: 10, quickClick: quickAddon(47622489) },
+  { name: "水煮蛋半顆", price: 10, quickClick: quickAddon(47622492) },
+  { name: "毛豆", price: 10, quickClick: quickAddon(47622503) },
+  { name: "花椰菜", price: 10, quickClick: quickAddon(47622493) },
+  { name: "豆腐", price: 10, quickClick: quickAddon(47622496) },
+  { name: "海帶芽", price: 10, quickClick: quickAddon(47622494) },
+  { name: "蘋果丁", price: 10, quickClick: quickAddon(47622495) },
+  { name: "玉米筍", price: 10, quickClick: quickAddon(47622497) },
+  { name: "菠菜", price: 10, quickClick: quickAddon(47622498) },
+  { name: "泡菜", price: 10, quickClick: quickAddon(47622499) },
+  { name: "和風裙帶絲", price: 10, quickClick: quickAddon(47622519) },
+  { name: "墨西哥玉米粒(含紫洋蔥)", price: 10, quickClick: quickAddon(47622520) },
+];
+const takeAPokeExtraSauceOptions = [
+  { name: "醬油哇沙米", price: 10, quickClick: quickAddon(47622501) },
+  { name: "柚子胡椒", price: 15, quickClick: quickAddon(47622502) },
+  { name: "胡麻醬", price: 15, quickClick: quickAddon(47622504) },
+  { name: "辣味美乃滋", price: 20, quickClick: quickAddon(47622505) },
+];
+const takeAPokeExtraToppingOptions = [
+  { name: "紫洋蔥", price: 5, quickClick: quickAddon(47622512) },
+  { name: "蔥花", price: 5, quickClick: quickAddon(47622513) },
+  { name: "黑芝麻", price: 5, quickClick: quickAddon(47622515) },
+  { name: "七味粉", price: 5, quickClick: quickAddon(47622514) },
+  { name: "咔辣姆久", price: 5, quickClick: quickAddon(47622517) },
+  { name: "鰹魚香鬆", price: 5, quickClick: quickAddon(47622516) },
+];
 
 const restaurants = [
   {
-    id: "pokehouse-sansia",
-    name: "PokéHouse 波奇好食",
+    id: "take-a-poke-sansia",
+    name: "波奇來一下 Take A Poke 三峽店",
     tag: "波奇碗 / 健康餐",
-    meta: "新北市三峽區國慶路102號",
+    meta: "新北市三峽區國際一街31-1號1樓",
+    syncMeta: "",
     color: "#0f7d68",
     sections: [
       {
@@ -89,39 +108,32 @@ const restaurants = [
         type: "single",
         required: true,
         options: [
-          { name: "素食波奇", price: 135, detail: "自由組合｜無蛋白質" },
-          { name: "小波奇", price: 165, detail: "自由組合｜一種蛋白質" },
-          { name: "大波奇", price: 195, detail: "自由組合｜二種蛋白質" },
-          { name: "豪華波奇", price: 225, detail: "自由組合｜三種蛋白質" },
           {
-            name: "舒肥雞胸",
-            price: 195,
-            detail: "組合波奇｜胚芽紫米｜舒肥雞胸(2份)｜毛豆｜馬鈴薯｜紅蘿蔔｜玉米｜海帶芽｜花椰菜｜和風油醋｜青蔥",
+            name: "自選 Poke Bowl",
+            price: 100,
+            detail: "含1份基底、5樣佐菜、1種醬汁、3種撒料",
+            quickClick: quickProduct(73081058),
           },
           {
-            name: "黃金泡菜豬",
-            price: 195,
-            detail: "組合波奇｜胚芽紫米｜豬肉(2份)｜毛豆｜泡菜｜紅蘿蔔｜豆腐｜鳳梨｜海帶芽｜主廚經典醬｜海苔｜堅果",
+            name: "隨便來碗 Poke Bowl",
+            price: 200,
+            detail: "店家搭配",
+            quickClick: quickProduct(73081059),
           },
           {
-            name: "豪華海陸",
-            price: 215,
-            detail: "組合波奇｜胚芽紫米｜蛋｜蝦仁｜豬肉｜番茄｜馬鈴薯｜花椰菜｜玉米｜紫洋蔥｜小黃瓜｜毛豆｜主廚經典醬｜芝麻｜米香",
+            name: "健身巨巨 Poke Bowl",
+            price: 150,
+            quickClick: quickProduct(73081061),
           },
           {
-            name: "夏威夷鮭魚",
-            price: 185,
-            detail: "組合波奇｜胚芽紫米｜挪威生鮭魚｜海帶芽｜玉米｜馬鈴薯｜紫洋蔥｜小黃瓜｜苜蓿芽｜哇沙米｜芝麻｜海苔",
+            name: "輕盈低卡 Poke Bowl",
+            price: 165,
+            quickClick: quickProduct(73081063),
           },
           {
-            name: "辣海鮮波奇",
-            price: 195,
-            detail: "組合波奇｜胚芽紫米｜蝦仁｜珍珠魚卵｜苜蓿芽｜紅地瓜｜番茄｜毛豆｜海藻沙拉｜小黃瓜｜美式辣美乃滋｜芝麻｜七味粉",
-          },
-          {
-            name: "川味麻辣牛",
-            price: 205,
-            detail: "組合波奇｜胚芽紫米｜牛肉(2份)｜毛豆｜馬鈴薯｜苜蓿芽｜玉米｜豆腐｜海帶芽｜川味麻辣｜芝麻｜堅果",
+            name: "蔬食友好 Poke Bowl",
+            price: 125,
+            quickClick: quickProduct(73081065),
           },
         ],
       },
@@ -130,126 +142,100 @@ const restaurants = [
         title: "基底",
         type: "single",
         required: true,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: freeBaseOptions,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeBaseOptions,
       },
       {
         id: "sides",
-        title: "配菜",
+        title: "佐菜",
         type: "multi",
-        min: 6,
-        max: 6,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: freeSideOptions,
+        min: 5,
+        max: 5,
+        quantity: false,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeSideOptions,
       },
       {
         id: "protein",
-        title: "蛋白質",
+        title: "蛋白質加購",
         type: "multi",
-        appliesTo: { sectionId: "main", optionNames: proteinPokeNames },
-        dynamicCount: {
-          sectionId: "main",
-          countsByOption: {
-            小波奇: 1,
-            大波奇: 2,
-            豪華波奇: 3,
-          },
-        },
-        options: [
-          { name: "舒肥雞胸", price: 0 },
-          { name: "豬肉", price: 0 },
-          { name: "起司乳酪", price: 0 },
-          { name: "蝦仁", price: 0 },
-          { name: "珍珠魚卵", price: 0 },
-          { name: "水煮蛋", price: 0 },
-          { name: "魷魚圈", price: 0 },
-          { name: "牛肉", price: 5 },
-          { name: "挪威生鮭魚", price: 20 },
-        ],
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeProteinOptions,
       },
       {
         id: "sauce",
         title: "醬料",
         type: "single",
         required: true,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: sauceOptions,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeSauceOptions,
       },
       {
         id: "toppings",
-        title: "點綴",
+        title: "撒料",
         type: "multi",
-        min: 2,
-        max: 2,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: toppingOptions,
+        min: 3,
+        max: 3,
+        quantity: false,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeToppingOptions,
       },
       {
         id: "extra-base",
         title: "加點基底",
         type: "multi",
-        max: 3,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: addOnBaseOptions,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeExtraBaseOptions,
       },
       {
         id: "extra-sides",
-        title: "加點配菜",
+        title: "佐菜加購",
         type: "multi",
-        max: 6,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: addOnSideOptions,
-      },
-      {
-        id: "extra-protein",
-        title: "加點蛋白質",
-        type: "multi",
-        max: 3,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: addOnProteinOptions,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeExtraSideOptions,
       },
       {
         id: "extra-sauce",
-        title: "加點醬料",
+        title: "醬料加購",
         type: "multi",
-        max: 3,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: addOnSauceOptions,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeExtraSauceOptions,
+      },
+      {
+        id: "sauce-adjust",
+        title: "醬料調整",
+        type: "multi",
+        max: 1,
+        quantity: false,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: [{ name: "醬少", price: 0, quickClick: quickAddon(47622522) }],
       },
       {
         id: "extra-toppings",
-        title: "加點點綴",
+        title: "撒料加購",
         type: "multi",
-        max: 6,
-        appliesTo: { sectionId: "main", optionNames: customPokeNames },
-        options: addOnToppingOptions,
+        appliesTo: { sectionId: "main", optionNames: takeAPokeCustomNames },
+        options: takeAPokeExtraToppingOptions,
       },
       {
-        id: "soup-drinks",
-        title: "湯品 / 飲品",
+        id: "drinks",
+        title: "飲料",
         type: "multi",
         max: 6,
         options: [
-          { name: "日式海帶芽味噌湯", price: 40, detail: "湯品" },
-          { name: "南瓜濃湯", price: 65, detail: "湯品", soldOut: true },
-          { name: "桂花金萱茶", price: 40, detail: "無糖" },
-          { name: "桂蜜蘋果紅茶", price: 40, detail: "無糖" },
-          { name: "白桃烏龍茶", price: 40, detail: "無糖" },
+          { name: "百香果醋飲", price: 15, quickClick: quickProduct(73081060) },
+          { name: "葡萄水果醋飲", price: 15, quickClick: quickProduct(73081062) },
+          { name: "蜜桃水果醋飲", price: 15, quickClick: quickProduct(73081064) },
+          { name: "蘋果水果醋飲", price: 15, quickClick: quickProduct(73081066) },
+          { name: "青梅水果醋飲", price: 15, quickClick: quickProduct(81737757) },
         ],
-      },
-      {
-        id: "side-orders",
-        title: "單點配菜",
-        type: "multi",
-        max: 10,
-        options: addOnSideOptions,
       },
       {
         id: "other",
         title: "其他",
         type: "multi",
         max: 2,
-        options: [{ name: "購物袋", price: 3 }],
+        options: [{ name: "自備餐盒", price: 0, quickClick: quickProduct(73081067) }],
       },
     ],
   },
@@ -308,6 +294,7 @@ const state = {
   customerName: "",
   note: "",
   selectionsByRestaurant: {},
+  quickClickStatus: null,
 };
 
 const elements = {
@@ -315,6 +302,7 @@ const elements = {
   restaurantCount: document.querySelector("#restaurantCount"),
   selectedRestaurantLabel: document.querySelector("#selectedRestaurantLabel"),
   restaurantMeta: document.querySelector("#restaurantMeta"),
+  appVersionLabel: document.querySelector("#appVersionLabel"),
   customerName: document.querySelector("#customerName"),
   orderNote: document.querySelector("#orderNote"),
   menuForm: document.querySelector("#menuForm"),
@@ -324,6 +312,8 @@ const elements = {
   orderTotal: document.querySelector("#orderTotal"),
   copyButton: document.querySelector("#copyButton"),
   jpgButton: document.querySelector("#jpgButton"),
+  scrollTopButton: document.querySelector("#scrollTopButton"),
+  scrollBottomButton: document.querySelector("#scrollBottomButton"),
   toast: document.querySelector("#toast"),
   previewPanel: document.querySelector("#previewPanel"),
   jpgPreview: document.querySelector("#jpgPreview"),
@@ -367,6 +357,74 @@ function optionMeta(option, section) {
   return parts.join(" · ") || "包含";
 }
 
+function syncableOptions() {
+  return restaurants.flatMap((restaurant) =>
+    restaurant.sections.flatMap((section) =>
+      section.options
+        .filter((option) => option.quickClick)
+        .map((option) => ({ restaurant, option }))
+    )
+  );
+}
+
+function applyQuickClickStatus(status) {
+  state.quickClickStatus = status;
+  const products = status.products || {};
+  const addons = status.addons || {};
+
+  syncableOptions().forEach(({ option }) => {
+    const source =
+      option.quickClick.type === "product"
+        ? products[option.quickClick.id]
+        : addons[option.quickClick.id];
+    if (!source) return;
+
+    option.soldOut = Boolean(source.soldOut);
+    if (Number.isFinite(source.price)) {
+      option.price = source.price;
+    }
+  });
+
+  const restaurant = restaurants.find((item) => item.id === "take-a-poke-sansia");
+  if (restaurant) {
+    restaurant.syncMeta = status.updatedAt
+      ? `同步 ${formatSyncTime(status.updatedAt)}`
+      : "已同步";
+  }
+}
+
+function formatSyncTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return new Intl.DateTimeFormat("zh-TW", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
+async function loadQuickClickStatus({ silent = false } = {}) {
+  try {
+    const response = await fetch(`${QUICKCLICK_STATUS_PATH}?t=${Date.now()}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const status = await response.json();
+    applyQuickClickStatus(status);
+    renderMenu();
+    syncSummary();
+    if (!silent) showToast("已同步 QuickClick 狀態");
+  } catch {
+    const restaurant = restaurants.find((item) => item.id === "take-a-poke-sansia");
+    if (restaurant) restaurant.syncMeta = "同步失敗";
+    renderMenu();
+    if (!silent) showToast("QuickClick 狀態同步失敗");
+  }
+}
+
 function renderRestaurants() {
   elements.restaurantCount.textContent = `${restaurants.length} 間`;
   elements.restaurantList.innerHTML = restaurants
@@ -399,7 +457,7 @@ function renderMenu() {
   document.documentElement.style.setProperty("--accent", restaurant.color);
   document.documentElement.style.setProperty("--accent-soft", softColor(restaurant.color));
   elements.selectedRestaurantLabel.textContent = restaurant.name;
-  elements.restaurantMeta.textContent = restaurant.meta;
+  elements.restaurantMeta.textContent = [restaurant.meta, restaurant.syncMeta].filter(Boolean).join("｜");
 
   elements.menuForm.innerHTML = visibleSections(restaurant, selection)
     .map((section) => renderSection(section, selection))
@@ -959,6 +1017,17 @@ function clearCurrentOrder() {
   showToast("已清除本次選擇");
 }
 
+function scrollToPageTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function scrollToPageBottom() {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    behavior: "smooth",
+  });
+}
+
 elements.restaurantList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-restaurant-id]");
   if (!button) return;
@@ -992,7 +1061,15 @@ elements.orderNote.addEventListener("input", (event) => {
 elements.clearButton.addEventListener("click", clearCurrentOrder);
 elements.copyButton.addEventListener("click", copySummary);
 elements.jpgButton.addEventListener("click", downloadJpg);
+elements.scrollTopButton.addEventListener("click", scrollToPageTop);
+elements.scrollBottomButton.addEventListener("click", scrollToPageBottom);
+
+elements.appVersionLabel.textContent = APP_VERSION;
 
 renderRestaurants();
 renderMenu();
 syncSummary();
+loadQuickClickStatus({ silent: true });
+setInterval(() => {
+  loadQuickClickStatus({ silent: true });
+}, QUICKCLICK_SYNC_INTERVAL_MS);

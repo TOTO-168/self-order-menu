@@ -15,7 +15,10 @@
           <h1>自助點餐機</h1>
         </div>
       </div>
-      <div class="header-note" id="selectedRestaurantLabel"></div>
+      <div class="header-note">
+        <span id="selectedRestaurantLabel"></span>
+        <span class="version-label" id="appVersionLabel"></span>
+      </div>
     </header>
 
     <main class="app-layout">
@@ -94,6 +97,19 @@
         </section>
       </aside>
     </main>
+
+    <div class="quick-scroll" aria-label="快速捲動">
+      <button class="quick-scroll-button" id="scrollTopButton" type="button" aria-label="快速置頂" title="快速置頂">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 15 6-6 6 6" />
+        </svg>
+      </button>
+      <button class="quick-scroll-button" id="scrollBottomButton" type="button" aria-label="快速置底" title="快速置底">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+    </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
