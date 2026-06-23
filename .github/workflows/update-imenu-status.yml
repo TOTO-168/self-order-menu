@@ -1,4 +1,4 @@
-name: Update QuickClick status
+name: Update iMenu status
 
 on:
   schedule:
@@ -18,18 +18,18 @@ jobs:
         with:
           node-version: 22
 
-      - name: Sync QuickClick status
+      - name: Sync iMenu status
         run: node server.js --sync-only
 
       - name: Commit updated status
         run: |
-          if git diff --quiet -- quickclick-status.json; then
-            echo "No QuickClick status changes."
+          if git diff --quiet -- imenu-status.json; then
+            echo "No iMenu status changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add quickclick-status.json
-          git commit -m "Update QuickClick status"
+          git add imenu-status.json
+          git commit -m "Update iMenu status"
           git push

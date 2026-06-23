@@ -1,6 +1,6 @@
 # 自助點餐機維護筆記
 
-這個專案是給家人或朋友快速勾選餐點用的網頁。主要菜單資料在 `app.js` 的 `restaurants` 陣列；版本號在 `APP_VERSION`；QuickClick 售完狀態由 `server.js` 每 1 小時同步一次到 `quickclick-status.json`。公開網頁由 GitHub Actions 每小時更新同步檔。
+這個專案是給家人或朋友快速勾選餐點用的網頁。主要菜單資料在 `app.js` 的 `restaurants` 陣列；版本號在 `APP_VERSION`；iMenu 售完狀態由 `server.js` 每 1 小時同步一次到 `imenu-status.json`。公開網頁由 GitHub Actions 每小時更新同步檔。
 
 ## 固定維護規則
 
@@ -16,10 +16,10 @@
 
 ## 目前餐廳
 
-- `波奇來一下 Take A Poke 三峽店`
-  - 來源連結：https://order.quickclick.cc/tw/food/P_QKlRKwbXr/
-  - 同步 API：`https://order.quickclick.cc/apis`
-  - 售完判斷：下架、庫存歸零、或 `soldOutUntilAt` 尚未過期。
+- `PokéHouse 波奇好食`
+  - 來源連結：https://imenu.com.tw/PokeHouse/PH_SanSia/menu
+  - 同步 API：`https://api.idelivery.com.tw/store/10692/menu`
+  - 售完判斷：iMenu `sold_status` 不是 `1`，或庫存欄位歸零。
 
 - `山泉水豆花`
   - 手動菜單，沒有點餐網站。
@@ -32,7 +32,7 @@
 
 ## 本機預覽
 
-可在專案資料夾啟動本機伺服器，會自動同步 QuickClick 狀態：
+可在專案資料夾啟動本機伺服器，會自動同步 iMenu 狀態：
 
 ```bash
 node server.js
