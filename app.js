@@ -1,4 +1,4 @@
-const APP_VERSION = "v2026.06.23.2";
+const APP_VERSION = "v2026.07.01.1";
 const MENU_STATUS_PATH = "./imenu-status.json";
 const MENU_SYNC_INTERVAL_MS = 60 * 60 * 1000;
 
@@ -428,6 +428,8 @@ const elements = {
 };
 
 let toastTimer = null;
+let menuAnimationFrame = null;
+let menuAnimationTimer = null;
 
 function getRestaurant() {
   return restaurants.find((restaurant) => restaurant.id === state.restaurantId);
@@ -573,7 +575,7 @@ function renderRestaurants() {
     .join("");
 }
 
-function renderMenu() {
+function renderMenu({ animate = false } = {}) {
   const restaurant = getRestaurant();
   const selection = getSelection(restaurant);
   normalizeSelection(restaurant, selection);
@@ -582,9 +584,37 @@ function renderMenu() {
   elements.selectedRestaurantLabel.textContent = restaurant.name;
   elements.restaurantMeta.textContent = [restaurant.meta, restaurant.syncMeta].filter(Boolean).join("｜");
 
+  stopMenuAnimation();
   elements.menuForm.innerHTML = visibleSections(restaurant, selection)
     .map((section) => renderSection(section, selection))
     .join("");
+  if (animate) animateMenuRender();
+}
+
+function stopMenuAnimation() {
+  clearTimeout(menuAnimationTimer);
+  if (menuAnimationFrame) cancelAnimationFrame(menuAnimationFrame);
+  menuAnimationFrame = null;
+  menuAnimationTimer = null;
+
+  elements.menuForm.classList.remove("is-animating");
+}
+
+function animateMenuRender() {
+  Array.from(elements.menuForm.children).forEach((section, index) => {
+    section.style.setProperty("--section-index", index);
+  });
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  menuAnimationFrame = requestAnimationFrame(() => {
+    menuAnimationFrame = null;
+    elements.menuForm.classList.add("is-animating");
+    menuAnimationTimer = setTimeout(() => {
+      elements.menuForm.classList.remove("is-animating");
+      menuAnimationTimer = null;
+    }, 620);
+  });
 }
 
 function renderSection(section, selection) {
@@ -1156,7 +1186,7 @@ elements.restaurantList.addEventListener("click", (event) => {
   if (!button) return;
   state.restaurantId = button.dataset.restaurantId;
   renderRestaurants();
-  renderMenu();
+  renderMenu({ animate: true });
   syncSummary();
 });
 
@@ -1190,7 +1220,7 @@ elements.scrollBottomButton.addEventListener("click", scrollToPageBottom);
 elements.appVersionLabel.textContent = APP_VERSION;
 
 renderRestaurants();
-renderMenu();
+renderMenu({ animate: true });
 syncSummary();
 loadMenuStatus({ silent: true });
 setInterval(() => {
