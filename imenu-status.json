@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T19:44:34.436Z",
+  "updatedAt": "2026-07-02T21:16:16.016Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -235,8 +235,8 @@
       "id": 1672759,
       "name": "日式海帶芽味噌湯",
       "price": 40,
-      "soldOut": true,
-      "soldStatus": 9,
+      "soldOut": false,
+      "soldStatus": 1,
       "stock": null,
       "hidden": false
     },
