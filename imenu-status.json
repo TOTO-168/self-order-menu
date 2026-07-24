@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-24T09:25:11.209Z",
+  "updatedAt": "2026-07-24T11:46:21.259Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -35,8 +35,8 @@
       "id": 102538,
       "name": "豪華海陸",
       "price": 215,
-      "soldOut": true,
-      "soldStatus": 9,
+      "soldOut": false,
+      "soldStatus": 1,
       "stock": null,
       "hidden": false
     },
@@ -57,8 +57,8 @@
       "id": 102540,
       "name": "辣海鮮波奇",
       "price": 195,
-      "soldOut": true,
-      "soldStatus": 9,
+      "soldOut": false,
+      "soldStatus": 1,
       "stock": null,
       "hidden": false
     },
