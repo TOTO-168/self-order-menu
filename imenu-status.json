@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-31T10:45:57.549Z",
+  "updatedAt": "2026-07-31T13:00:50.755Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -13,8 +13,8 @@
       "id": 102536,
       "name": "舒肥雞胸",
       "price": 195,
-      "soldOut": false,
-      "soldStatus": 1,
+      "soldOut": true,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
