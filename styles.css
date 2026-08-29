@@ -192,7 +192,7 @@ h3 {
   transform: translateY(0) scale(0.99);
 }
 
-.restaurant-button[aria-selected="true"] {
+.restaurant-button[aria-pressed="true"] {
   border-color: var(--accent);
   box-shadow: 0 10px 26px rgba(15, 125, 104, 0.16);
 }
@@ -477,10 +477,10 @@ h3 {
 
 .quantity-stepper {
   width: fit-content;
-  min-width: 112px;
-  height: 34px;
+  min-width: 132px;
+  height: 44px;
   display: grid;
-  grid-template-columns: 34px minmax(34px, 1fr) 34px;
+  grid-template-columns: 44px minmax(44px, 1fr) 44px;
   align-items: center;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -489,8 +489,8 @@ h3 {
 }
 
 .quantity-button {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border: 0;
   background: #fff;
   color: var(--accent-dark);
@@ -517,7 +517,7 @@ h3 {
 }
 
 .quantity-value {
-  min-width: 34px;
+  min-width: 44px;
   color: var(--ink);
   font-weight: 900;
   text-align: center;

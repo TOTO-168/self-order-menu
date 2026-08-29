@@ -14,7 +14,8 @@ const COMPANY_ID = 4030;
 const STORE_ID = 10692;
 const SOURCE_URL = "https://imenu.com.tw/PokeHouse/PH_SanSia/menu";
 const API_BASE = "https://api.idelivery.com.tw";
-const API_SECRET = "NzJhMDZiMzE0NWU0NDlkMGY0ZDMzYTJiMTE5OTYzMGQ0YmU1M2M1ZA==";
+const API_SECRET = process.env.IMENU_API_SECRET;
+const API_TIMEOUT_MS = 15_000;
 
 const MIME_TYPES = {
   ".css": "text/css; charset=utf-8",
@@ -79,6 +80,10 @@ function toStatusEntity(item, extra = {}) {
 }
 
 async function apiGet(endpoint, query = {}) {
+  if (!API_SECRET) {
+    throw new Error("缺少 IMENU_API_SECRET 環境變數");
+  }
+
   const url = new URL(endpoint, API_BASE);
   Object.entries({ ...query, lang: "zh_TW" }).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== "") {
@@ -93,6 +98,7 @@ async function apiGet(endpoint, query = {}) {
       "Content-Type": "application/json;charset=utf8",
       "Request-Id": randomUUID().replaceAll("-", ""),
     },
+    signal: AbortSignal.timeout(API_TIMEOUT_MS),
   });
 
   if (!response.ok) {
@@ -214,10 +220,7 @@ async function serveFile(request, response) {
   }
 }
 
-async function main() {
-  await syncImenuStatus();
-  setInterval(syncImenuStatus, SYNC_INTERVAL_MS);
-
+function main() {
   http.createServer((request, response) => {
     serveFile(request, response).catch((error) => {
       response.writeHead(500);
@@ -226,10 +229,22 @@ async function main() {
   }).listen(PORT, HOST, () => {
     console.log(`Serving on http://${HOST}:${PORT}/`);
   });
+
+  syncImenuStatus();
+  setInterval(syncImenuStatus, SYNC_INTERVAL_MS);
 }
 
-if (process.argv.includes("--sync-only")) {
-  syncImenuStatus({ failOnError: true });
-} else {
-  main();
+if (require.main === module) {
+  if (process.argv.includes("--sync-only")) {
+    syncImenuStatus({ failOnError: true });
+  } else {
+    main();
+  }
 }
+
+module.exports = {
+  entityPrice,
+  isSoldOut,
+  resolveRequestPath,
+  statusIsUnavailable,
+};

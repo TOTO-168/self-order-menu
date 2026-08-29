@@ -1,4 +1,4 @@
-const APP_VERSION = "v2026.07.01.1";
+const APP_VERSION = "v2026.08.29.1";
 const MENU_STATUS_PATH = "./imenu-status.json";
 const MENU_SYNC_INTERVAL_MS = 60 * 60 * 1000;
 
@@ -405,7 +405,7 @@ const state = {
   menuStatus: null,
 };
 
-const elements = {
+const elements = typeof document === "undefined" ? {} : {
   restaurantList: document.querySelector("#restaurantList"),
   restaurantCount: document.querySelector("#restaurantCount"),
   selectedRestaurantLabel: document.querySelector("#selectedRestaurantLabel"),
@@ -462,7 +462,7 @@ function optionMeta(option, section) {
   }
 
   if (option.detail) parts.push(option.detail);
-  if (option.soldOut) parts.push("售完");
+  if (option.soldOut) parts.push(option.syncMissing ? "同步缺漏" : "售完");
 
   return parts.join(" · ") || "包含";
 }
@@ -499,10 +499,16 @@ function findImenuSource(status, imenu) {
 
 function applyMenuStatus(status) {
   state.menuStatus = status;
+  const missingOptions = new Set();
 
   syncableOptions().forEach(({ option }) => {
     const source = findImenuSource(status, option.imenu);
-    if (!source) return;
+    option.syncMissing = !source;
+    if (!source) {
+      option.soldOut = true;
+      missingOptions.add(option);
+      return;
+    }
 
     option.soldOut = Boolean(source.soldOut);
     if (option.imenu.syncPrice !== false && Number.isFinite(source.price)) {
@@ -512,10 +518,15 @@ function applyMenuStatus(status) {
 
   const restaurant = restaurants.find((item) => item.id === "pokehouse-sansia");
   if (restaurant) {
-    restaurant.syncMeta = status.updatedAt
+    const syncTime = status.updatedAt
       ? `同步 ${formatSyncTime(status.updatedAt)}`
       : "已同步";
+    restaurant.syncMeta = missingOptions.size
+      ? `${syncTime}｜${missingOptions.size} 項同步缺漏`
+      : syncTime;
   }
+
+  return missingOptions.size;
 }
 
 function formatSyncTime(value) {
@@ -559,8 +570,7 @@ function renderRestaurants() {
         <button
           class="restaurant-button"
           type="button"
-          role="tab"
-          aria-selected="${isActive}"
+          aria-pressed="${isActive}"
           data-restaurant-id="${restaurant.id}"
           style="--restaurant-color: ${restaurant.color}"
         >
@@ -995,6 +1005,8 @@ function priceLabel(option, section, quantity = 1) {
 }
 
 function syncSummary() {
+  elements.previewPanel.hidden = true;
+  elements.jpgPreview.removeAttribute("src");
   const order = buildOrder();
   elements.summaryText.textContent = order.text;
   elements.orderTotal.textContent = formatPrice(order.total);
@@ -1181,48 +1193,64 @@ function scrollToPageBottom() {
   });
 }
 
-elements.restaurantList.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-restaurant-id]");
-  if (!button) return;
-  state.restaurantId = button.dataset.restaurantId;
+if (typeof document !== "undefined") {
+  elements.restaurantList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-restaurant-id]");
+    if (!button) return;
+    state.restaurantId = button.dataset.restaurantId;
+    renderRestaurants();
+    renderMenu({ animate: true });
+    syncSummary();
+  });
+
+  elements.menuForm.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-quantity-action]");
+    if (!button) return;
+    updateQuantity(button);
+  });
+
+  elements.menuForm.addEventListener("change", (event) => {
+    if (!event.target.matches("input[data-section-id]")) return;
+    updateSelection(event.target);
+  });
+
+  elements.customerName.addEventListener("input", (event) => {
+    state.customerName = event.target.value;
+    syncSummary();
+  });
+
+  elements.orderNote.addEventListener("input", (event) => {
+    state.note = event.target.value;
+    syncSummary();
+  });
+
+  elements.clearButton.addEventListener("click", clearCurrentOrder);
+  elements.copyButton.addEventListener("click", copySummary);
+  elements.jpgButton.addEventListener("click", downloadJpg);
+  elements.scrollTopButton.addEventListener("click", scrollToPageTop);
+  elements.scrollBottomButton.addEventListener("click", scrollToPageBottom);
+
+  elements.appVersionLabel.textContent = APP_VERSION;
+
   renderRestaurants();
   renderMenu({ animate: true });
   syncSummary();
-});
-
-elements.menuForm.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-quantity-action]");
-  if (!button) return;
-  updateQuantity(button);
-});
-
-elements.menuForm.addEventListener("change", (event) => {
-  if (!event.target.matches("input[data-section-id]")) return;
-  updateSelection(event.target);
-});
-
-elements.customerName.addEventListener("input", (event) => {
-  state.customerName = event.target.value;
-  syncSummary();
-});
-
-elements.orderNote.addEventListener("input", (event) => {
-  state.note = event.target.value;
-  syncSummary();
-});
-
-elements.clearButton.addEventListener("click", clearCurrentOrder);
-elements.copyButton.addEventListener("click", copySummary);
-elements.jpgButton.addEventListener("click", downloadJpg);
-elements.scrollTopButton.addEventListener("click", scrollToPageTop);
-elements.scrollBottomButton.addEventListener("click", scrollToPageBottom);
-
-elements.appVersionLabel.textContent = APP_VERSION;
-
-renderRestaurants();
-renderMenu({ animate: true });
-syncSummary();
-loadMenuStatus({ silent: true });
-setInterval(() => {
   loadMenuStatus({ silent: true });
-}, MENU_SYNC_INTERVAL_MS);
+  setInterval(() => {
+    loadMenuStatus({ silent: true });
+  }, MENU_SYNC_INTERVAL_MS);
+}
+
+if (typeof module !== "undefined") {
+  module.exports = {
+    applyMenuStatus,
+    buildOrder,
+    createEmptySelection,
+    findImenuSource,
+    getSelection,
+    normalizeSelection,
+    restaurants,
+    state,
+    syncableOptions,
+  };
+}

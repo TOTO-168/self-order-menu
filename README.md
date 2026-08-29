@@ -35,13 +35,31 @@
 可在專案資料夾啟動本機伺服器，會自動同步 iMenu 狀態：
 
 ```bash
-node server.js
+IMENU_API_SECRET="你的 iMenu API token" node server.js
 ```
 
 然後打開：
 
 ```text
 http://localhost:4173/
+```
+
+如果沒有設定 `IMENU_API_SECRET`，本機頁面仍會啟動，但會使用現有的 `imenu-status.json` 並在終端顯示同步失敗。
+
+## 自動同步設定
+
+GitHub Actions 需要 repository secret `IMENU_API_SECRET`。推送本次安全性調整前，請先執行：
+
+```bash
+gh secret set IMENU_API_SECRET --repo TOTO-168/self-order-menu
+```
+
+## 測試
+
+不需要安裝套件，直接使用 Node 內建測試：
+
+```bash
+node --test
 ```
 
 ## 公開網址

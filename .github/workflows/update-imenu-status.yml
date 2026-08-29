@@ -19,6 +19,8 @@ jobs:
           node-version: 22
 
       - name: Sync iMenu status
+        env:
+          IMENU_API_SECRET: ${{ secrets.IMENU_API_SECRET }}
         run: node server.js --sync-only
 
       - name: Commit updated status
