@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T23:51:48.616Z",
+  "updatedAt": "2026-09-05T03:58:39.174Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -302,7 +302,7 @@
       "name": "生菜",
       "price": 20,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": true
     },
@@ -1280,7 +1280,7 @@
       "name": "生菜",
       "price": 0,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -1839,7 +1839,7 @@
       "name": "生菜",
       "price": 20,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -2515,7 +2515,7 @@
       "name": "生菜",
       "price": 0,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -3191,7 +3191,7 @@
       "name": "生菜",
       "price": 20,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -3867,7 +3867,7 @@
       "name": "生菜",
       "price": 0,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -4543,7 +4543,7 @@
       "name": "生菜",
       "price": 20,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -5219,7 +5219,7 @@
       "name": "生菜",
       "price": 0,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
@@ -5895,7 +5895,7 @@
       "name": "生菜",
       "price": 20,
       "soldOut": true,
-      "soldStatus": 2,
+      "soldStatus": 9,
       "stock": null,
       "hidden": false
     },
