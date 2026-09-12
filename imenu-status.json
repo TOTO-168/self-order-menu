@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T19:09:16.708Z",
+  "updatedAt": "2026-09-12T22:06:48.744Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -35,8 +35,8 @@
       "id": 102538,
       "name": "豪華海陸",
       "price": 215,
-      "soldOut": true,
-      "soldStatus": 9,
+      "soldOut": false,
+      "soldStatus": 1,
       "stock": null,
       "hidden": false
     },
