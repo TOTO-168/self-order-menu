@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-10-03T01:50:16.806Z",
+  "updatedAt": "2026-10-03T07:53:01.398Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
   "storeId": 10692,
   "storeName": "PokéHouse 波奇好食(三峽店)",
-  "menuVersion": "20261003024351_10692",
+  "menuVersion": "20261003102154_10692",
   "sets": {
     "組合波奇::舒肥雞胸": {
       "category": "組合波奇",
