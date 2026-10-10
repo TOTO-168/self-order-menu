@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T19:56:34.074Z",
+  "updatedAt": "2026-10-10T23:24:44.494Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -246,8 +246,8 @@
       "id": 1672760,
       "name": "南瓜濃湯",
       "price": 70,
-      "soldOut": true,
-      "soldStatus": 9,
+      "soldOut": false,
+      "soldStatus": 1,
       "stock": null,
       "hidden": false
     },
