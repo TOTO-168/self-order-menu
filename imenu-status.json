@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T02:38:43.887Z",
+  "updatedAt": "2026-11-11T10:36:16.794Z",
   "sourceUrl": "https://imenu.com.tw/PokeHouse/PH_SanSia/menu",
   "apiBase": "https://api.idelivery.com.tw",
   "companyId": 4030,
@@ -1157,7 +1157,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "舒肥雞胸::湯品、飲品 優惠加購::日式海帶芽味增湯": {
       "setId": 102536,
@@ -1235,7 +1235,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "黃金泡菜豬::湯品、飲品 優惠加購::日式海帶芽味增湯": {
       "setId": 102537,
@@ -1313,7 +1313,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "豪華海陸::湯品、飲品 優惠加購::日式海帶芽味增湯": {
       "setId": 102538,
@@ -1391,7 +1391,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "夏威夷鮭魚::湯品、飲品 優惠加購::日式海帶芽味增湯": {
       "setId": 102539,
@@ -1469,7 +1469,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "辣海鮮波奇::湯品、飲品 優惠加購::日式海帶芽味增湯": {
       "setId": 102540,
@@ -1547,7 +1547,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "川味麻辣牛::湯品、飲品 優惠加購::日式海帶芽味增湯": {
       "setId": 102541,
@@ -1612,7 +1612,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "素食波奇::基底(選一)::胚芽紫米": {
       "setId": 102542,
@@ -2847,7 +2847,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "小波奇::基底(選一)::胚芽紫米": {
       "setId": 102543,
@@ -4199,7 +4199,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "大波奇::基底(選一)::胚芽紫米": {
       "setId": 102544,
@@ -5551,7 +5551,7 @@
       "soldOut": false,
       "soldStatus": 1,
       "stock": null,
-      "hidden": false
+      "hidden": true
     },
     "豪華波奇::基底(選一)::胚芽紫米": {
       "setId": 102545,
